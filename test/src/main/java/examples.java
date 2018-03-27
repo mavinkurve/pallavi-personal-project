@@ -24,4 +24,17 @@ public class examples {
             return mid + 1;
         return -1;
     }
+
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (slow != null && fast != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast && slow !=null && fast!=null)
+                return true;
+        }
+        return false;
+    }
 }
