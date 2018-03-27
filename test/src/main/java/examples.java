@@ -37,4 +37,8 @@ public class examples {
         }
         return false;
     }
+
+    public int findLengthOfMaxSubarray(int[] A, int[] B) {
+
+    }
 }
