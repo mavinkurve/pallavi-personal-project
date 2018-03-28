@@ -1,44 +1,46 @@
 public class examples {
-    public int insertInSortedArray(int[] array, int n) {
-        if (array.length == 0)
+    public int searchInsert(int[] nums, int target) {
+        if (nums.length == 0)
             return -1;
 
-        return findInsertionPlace(array,0,array.length-1,n);
+
+
+        return findInsertionPlace(nums,0,nums.length-1,target);
     }
 
-    private int findInsertionPlace(int[] array, int i, int j, int n) {
-
-        if (j <= i)
+    private int findInsertionPlace(int[] nums, int i, int j, int target) {
+        if (nums[i] >= target)
             return i;
+        if (nums[j] == target)
+            return j;
+        if (nums[j] < target)
+            return j + 1;
 
         int mid = i + ((j - i)/2);
 
-        if (array[mid] > n)
-            return findInsertionPlace(array,i,mid,n);
-        if (array[mid] < n && array[mid + 1] > n) {
-            return mid + 1;
-        }
-        if (array[mid + 1] < n)
-            return findInsertionPlace(array,mid +1, j , n);
-        if (array[mid] == n || array[mid+1] == n)
-            return mid + 1;
-        return -1;
+
+        if (nums[mid] == target)
+            return mid;
+
+        if (nums[mid] > target)
+            return findInsertionPlace(nums,i,mid,target);
+        else
+            return findInsertionPlace(nums,mid +1, j , target);
     }
 
     public boolean hasCycle(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
 
-        while (slow != null && fast != null) {
+        while (slow != fast) {
             slow = slow.next;
-            fast = fast.next.next;
-            if (slow == fast && slow !=null && fast!=null)
-                return true;
+            if (fast == null || fast.next == null)
+                return false;
+            else {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
         }
-        return false;
-    }
-
-    public int findLengthOfMaxSubarray(int[] A, int[] B) {
-
+        return true;
     }
 }

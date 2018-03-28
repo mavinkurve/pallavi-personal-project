@@ -3,7 +3,7 @@ public class driver {
     public static void main(String[] args) {
 
         examples e = new examples();
-
+/*
         ListNode l1 = new ListNode(1);
         ListNode l2 = new ListNode(2);
         ListNode l3 = new ListNode(3);
@@ -14,10 +14,10 @@ public class driver {
         l4.next = l3;
 
         p("has Cycle? " + e.hasCycle(l1));
+*/
 
-/*
-        p("insert in sorted array: " + e.insertInSortedArray(new int[]{1,3,5,6},5));
-        */
+        p("insert in sorted array: " + e.searchInsert(new int[]{1,3,5},3));
+
     }
 
     private static void p(String s) {
