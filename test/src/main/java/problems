@@ -1,0 +1,17 @@
+First Bad Version
+
+You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
+
+You are given an API bool isBadVersion(version) which will return whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
+
+=================================================================
+
+Binary Search Tree Iterator
+
+Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
+
+Calling next() will return the next smallest number in the BST.
+
+Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
