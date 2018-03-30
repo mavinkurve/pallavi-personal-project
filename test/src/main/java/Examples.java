@@ -1,5 +1,9 @@
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Examples {
     public int searchInsert(int[] nums, int target) {
@@ -74,5 +78,22 @@ public class Examples {
             return -1;      //invalid char
         }
         return Math.max(currentSubStringLength,maxSubstringLength);
+    }
+
+    public int findContentChildren(int[] g, int[] c) {
+        final int[] count = { 0 };
+        final List<Integer> greed = Arrays.stream(g).boxed().collect(Collectors.toList());
+        final List<Integer> cookies = Arrays.stream(c).boxed().collect(Collectors.toList());
+        Collections.sort(greed);
+        Collections.sort(cookies);
+        greed.forEach(gr -> {
+            for (int i = 0; i < cookies.size(); i++) {
+                if (cookies.get(i) >= gr) {
+                    count[0]++;
+                    cookies.remove(i);
+            }
+            }
+        });
+        return count[0];
     }
 }

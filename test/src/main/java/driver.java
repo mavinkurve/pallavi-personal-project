@@ -5,10 +5,10 @@ public class driver {
     public static void main(String[] args) {
 
         Examples e = new Examples();
-        p("longest valid parenthesis: " + e.longestValidParenthesis(")(()(())("));
+  //      p("longest valid parenthesis: " + e.longestValidParenthesis(")(()(())("));
 
 
-  /*      TreeNode n8 = new TreeNode(8);
+        TreeNode n8 = new TreeNode(8);
 
         TreeNode n4 = new TreeNode(4);
         TreeNode n10 = new TreeNode(10);
@@ -35,14 +35,14 @@ public class driver {
         n10.left = n9;
         n10.right = n11;
 
-        BSTIterator i = new BSTIterator(n8);
+        BSTIterator i = new BSTIterator(null);
         System.out.println("BSTIterator: ");
         while (i.hasNext()) {
             System.out.print(i.next() + "->");
         }
         p("END");
 
-
+/*
         Examples e = new Examples();
 
         int badVersion = 10;
