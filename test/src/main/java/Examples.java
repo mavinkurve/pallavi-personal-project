@@ -1,8 +1,7 @@
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+
+import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class Examples {
@@ -81,19 +80,177 @@ public class Examples {
     }
 
     public int findContentChildren(int[] g, int[] c) {
-        final int[] count = { 0 };
+        int count = 0;
         final List<Integer> greed = Arrays.stream(g).boxed().collect(Collectors.toList());
         final List<Integer> cookies = Arrays.stream(c).boxed().collect(Collectors.toList());
         Collections.sort(greed);
         Collections.sort(cookies);
-        greed.forEach(gr -> {
-            for (int i = 0; i < cookies.size(); i++) {
-                if (cookies.get(i) >= gr) {
-                    count[0]++;
-                    cookies.remove(i);
+        for (int child = 0; child < greed.size();) {
+            boolean cookieFound = false;
+            for (int cookie = 0; cookie < cookies.size();) {
+                if (cookies.get(cookie) >= greed.get(child)) {
+                    cookies.remove(cookie);
+                    greed.remove(child);
+                    count++;
+                    cookieFound = true;
+                    break;
+                }
+                else {
+                    cookie++;
+                }
             }
+            if (!cookieFound)
+                child++;
+        }
+        return count;
+    }
+
+    public int findSecondMinimumValue(TreeNode root) {
+
+        HashSet<Integer> values = new HashSet<>();
+        values = depthFirstSearch(root,values);
+        int min = root.val;
+        long secondMin = Long.MAX_VALUE;
+
+        for (Integer v : values) {
+            if (min < v && v < secondMin)
+                secondMin = v;
+        }
+        return secondMin < Long.MAX_VALUE ? (int) secondMin : -1;
+    }
+
+    private HashSet<Integer> depthFirstSearch(TreeNode root, HashSet<Integer> values) {
+        if (root != null) {
+            values.add(root.val);
+            depthFirstSearch(root.left, values);
+            depthFirstSearch(root.right, values);
+        }
+        return values;
+    }
+
+    public int monotoneIncreasingDigits(int N) {
+        List<Integer> ints = new ArrayList<>();
+        while (N > 0) {
+            ints.add(N % 10);
+            N = N / 10;
+        }
+        Collections.reverse(ints);
+        for (int i = ints.size()-1; i > 0; i--) {
+            if (ints.get(i) < ints.get(i-1)) {
+                for (int j = i; j < ints.size(); j++) {
+                    ints.set(j, 9);
+                }
+                ints.set(i-1,ints.get(i-1) == 0 ? 9 : ints.get(i-1)-1);
             }
-        });
-        return count[0];
+        }
+
+        int returnInt = 0;
+        for (Integer anInt : ints) {
+            returnInt = (returnInt * 10) + anInt;
+        }
+        return returnInt;
+    }
+
+    public List<Person> reconstructQueue(List<Person> people) {
+        Stack<Person> stack = new Stack<>();
+        Collections.sort(people,new PersonComparator());
+
+        for (Person person : people) {
+            if (stack.isEmpty()) {
+                stack.push(person);
+                continue;
+            }
+
+            List<Person> poppedPeople = new ArrayList<>();
+            for (int j = 1; j <= person.k; j++) {
+                poppedPeople.add(stack.pop());
+            }
+            stack.push(person);
+            for(int p = poppedPeople.size()-1;p>=0;p--) {
+                stack.push(poppedPeople.get(p));
+            }
+
+        }
+
+        List<Person> queue = new ArrayList<>();
+        while(!stack.isEmpty()){
+            queue.add(stack.pop());
+        }
+        return queue;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        System.out.println("Adding ");
+        l1.print();
+        l2.print();
+        ListNode sum = new ListNode(l1.val + l2.val);
+        int leftOver = 0;
+        if (sum.val >= 10)
+        {
+            leftOver = 1;
+            sum.val = sum.val % 10;
+        }
+        ListNode root = sum;
+        while (l1.next != null && l2.next !=null) {
+            l1 = l1.next;
+            l2 = l2.next;
+            sum.next  = new ListNode(l1.val + l2.val + leftOver);
+            sum = sum.next;
+            if (sum.val >= 10) {
+                leftOver = 1;
+                sum.val = sum.val % 10;
+            }
+            else {
+                leftOver = 0;
+            }
+        }
+        ListNode longerNum = null;
+        if (l1.next != null) {
+            longerNum = l1.next;
+        }
+        if (l2.next != null) {
+            longerNum = l2.next;
+        }
+        while(longerNum != null) {
+            sum.next = new ListNode(longerNum.val + leftOver);
+            sum = sum.next;
+            if (sum.val >= 10) {
+                leftOver = 1;
+                sum.val = sum.val % 10;
+            }
+            else {
+                leftOver = 0;
+            }
+            longerNum = longerNum.next;
+        }
+        if (leftOver != 0)
+            sum.next = new ListNode(leftOver);
+
+        System.out.println("Sum: ");
+        root.print();
+        return root;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null)
+            return null;
+       TreeMap<Integer,Integer> map = new TreeMap<>();
+       map.put(head.val,1);
+       while (head.next != null) {
+           head = head.next;
+           if (map.containsKey(head.val))
+               map.put(head.val,map.get(head.val) + 1);
+           else
+               map.put(head.val,1);
+       }
+       ListNode dummy = new ListNode(-1);
+       ListNode current = dummy;
+       for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+           if (entry.getValue() == 1) {
+               current.next = new ListNode(entry.getKey());
+               current = current.next;
+           }
+       }
+       return dummy.next;
     }
 }

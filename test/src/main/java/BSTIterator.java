@@ -6,11 +6,13 @@ public class BSTIterator {
 
     public BSTIterator(TreeNode root) {
         stack = new Stack<TreeNode>();
+
         if (root != null) {
             stack.push(root);
             TreeNode current = root;
             while (current != null) {
-                if (current.left != null) stack.push(current.left);
+                if (current.left != null)
+                    stack.push(current.left);
                 current = current.left;
             }
         }
