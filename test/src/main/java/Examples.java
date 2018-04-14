@@ -105,28 +105,8 @@ public class Examples {
         return count;
     }
 
-    public int findSecondMinimumValue(TreeNode root) {
 
-        HashSet<Integer> values = new HashSet<>();
-        values = depthFirstSearch(root,values);
-        int min = root.val;
-        long secondMin = Long.MAX_VALUE;
 
-        for (Integer v : values) {
-            if (min < v && v < secondMin)
-                secondMin = v;
-        }
-        return secondMin < Long.MAX_VALUE ? (int) secondMin : -1;
-    }
-
-    private HashSet<Integer> depthFirstSearch(TreeNode root, HashSet<Integer> values) {
-        if (root != null) {
-            values.add(root.val);
-            depthFirstSearch(root.left, values);
-            depthFirstSearch(root.right, values);
-        }
-        return values;
-    }
 
     public int monotoneIncreasingDigits(int N) {
         List<Integer> ints = new ArrayList<>();

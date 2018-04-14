@@ -10,6 +10,35 @@ public class driver {
         StringProblems sp = new StringProblems();
         Practice2 p = new Practice2();
         MathProblems mp = new MathProblems();
+        GraphProblems gp = new GraphProblems();
+        ArrayProblems ap = new ArrayProblems();
+        TreeProblems tp = new TreeProblems();
+
+        p("perfect? " + mp.checkPerfectNumber(40));
+        /*
+        TreeNode n1 = new TreeNode(5);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n3 = new TreeNode(-5);
+        n1.left = n2;
+        n1.right = n3;
+
+        p("Freq: " + Arrays.toString(tp.findFrequentTreeSum(n1)));
+
+
+        p("Min: " + ap.findMin(new int[]{1}));
+
+        p(sp.customSortString("cba","abcdecab"));
+
+        p("Duplicates: " + mp.findDuplicates(new int[]{4,3,2,7,8,2,3,1}));
+
+
+        int[][] graph = new int[4][];
+        graph[0] = new int[]{1,2};
+        graph[1] = new int[]{2,3};
+        graph[2] = new int[]{3};
+        graph[3] = new int[]{};
+        List<List<Integer>> paths = gp.allPathsSourceTarget(graph);
+        paths.forEach(path -> p(Arrays.toString(path.toArray())));
 
         int[][] grid =  new int[4][4];
         grid[0] = new int []{3, 0, 8, 4};
@@ -18,7 +47,7 @@ public class driver {
         grid[3] = new int []{0,3,1,0};
 
         mp.maxIncreaseKeepingSkyline(grid);
-        /*
+
         List<Interval> intervals = new ArrayList<>();
         intervals.add(new Interval(1,4));
         intervals.add(new Interval(2,3));
@@ -97,12 +126,7 @@ public class driver {
                         new int[]{1,2,3}));
 
 
-        TreeNode n1 = new TreeNode(2);
 
-        TreeNode n2 = new TreeNode(2);
-        TreeNode n3 = new TreeNode(5);
-        n1.left = n2;
-        n1.right = n3;
 
         TreeNode n4 = new TreeNode(5);
         TreeNode n5 = new TreeNode(7);

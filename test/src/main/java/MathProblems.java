@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class MathProblems {
 
@@ -61,6 +58,60 @@ public class MathProblems {
         }
         return result;
     }
+
+    public List<Integer> findDuplicates(int[] nums) {
+        HashSet<Integer> duplicates = new HashSet<>();
+        for (int i = 0; i < nums.length;) {
+            while (nums[i] != i+1) {
+                if(nums[nums[i]-1] == nums[i]) {
+                    // found duplicate
+                    duplicates.add(nums[i]);
+                    break;
+                }
+                else { //swap
+                    int temp = nums[nums[i]-1];
+                    nums[nums[i] - 1] = nums[i];
+                    nums[i] = temp;
+                }
+            }
+            i++;
+        }
+        return new ArrayList(duplicates);
+    }
+
+    public boolean checkPerfectNumber(int num) {
+        if (num <= 1)
+            return false;
+        int original = num;
+        int sum = 1;
+        for (int i = 2; i < num; i++) {
+            if ((original % i) == 0) {
+                sum += (original / i) + i;
+                if (sum > original)
+                    return false;
+                num = original / i;
+            }
+        }
+        return (sum == original);
+    }
+
+    public String solveEquation(String equation) {
+        String infinite = "Inifinite solutions";
+        String noSolution = "No solution";
+        String solution = "x=";
+
+        String left = equation.split("=")[0];
+        String right = equation.split("=")[1];
+
+        for (int i = 0; i < left.length(); i++) {
+            if (left.charAt(i) == '+' || left.charAt(i) == '-') {
+
+            }
+        }
+
+        return solution;
+    }
+
 }
 
 class IntervalComparator implements Comparator<Interval> {

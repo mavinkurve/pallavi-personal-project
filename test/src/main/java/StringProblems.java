@@ -49,6 +49,43 @@ public class StringProblems {
         }
     }
 
+    public String customSortString(String S, String T) {
+        StringBuilder sb = new StringBuilder();
+        HashMap<Integer,String> sortOrder = new HashMap<>();
+        HashMap<Character,Integer> stringMap = new HashMap<>();
+
+        for (int i = 0; i < T.length(); i++) {
+            if (stringMap.containsKey(T.charAt(i)))
+                stringMap.put(T.charAt(i), stringMap.get(T.charAt(i)) + 1);
+            else
+                stringMap.put(T.charAt(i), 1);
+        }
+
+        for (int j = 0; j < 26; j++) {
+            sortOrder.put(j,"");
+        }
+
+        for (int j = 0; j < S.length(); j++) {
+            sortOrder.put(S.charAt(j) - 'a',S.substring(0,j));
+        }
+
+        for(int a =0; a < 26; a++) {
+            for (Integer k : sortOrder.keySet()) {
+                if (sortOrder.get(k).length() == a) {
+                    for (Map.Entry<Character, Integer> entry : stringMap.entrySet()) {
+                        if ((entry.getKey() - 'a') == k) {
+                            for (Integer v = 0; v < entry.getValue(); v++) {
+                                sb.append(entry.getKey());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    return sb.toString();
+}
+
     public int lengthOfLastWord(String s) {
         String[] split = s.split(" ");
         if (split.length <= 1)
