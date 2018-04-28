@@ -2,6 +2,17 @@ import java.util.*;
 
 public class TreeProblems {
 
+    public int sumOfLeftLeaves(TreeNode root) {
+        int sum = 0;
+        if (root.left != null && (root.left.left == null))
+            sum += root.left.val;
+        if (root.left != null)
+            sum += sumOfLeftLeaves(root.left);
+        if (root.right != null)
+            sum += sumOfLeftLeaves(root.right);
+        return sum;
+    }
+
     public int[] findFrequentTreeSum(TreeNode root) {
         if (root == null)
             return new int[]{};

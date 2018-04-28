@@ -1,28 +1,41 @@
-public class Solution extends VersionControl {
+import java.util.*;
 
-    public int firstBadVersion (int n) {
-        return searchBadVersion(1,n);
-    }
+class Solution {
 
-    private int searchBadVersion(int begin, int end) {
+    int[] original;
+    int[] current;
+    Random random;
 
-        if (end < begin)
-            return -1;
-        if (begin == end) {
-            if (isBadVersion(begin))
-                return begin;
-            return -1;
+    public Solution(int[] nums) {
+        original = nums;
+        current = new int[original.length];
+        for (int i = 0; i < original.length; i++) {
+            current[i] = original[i];
         }
-        int mid = begin + (end - begin)/2;
-        final boolean midIsBad = isBadVersion(mid);
-        final boolean midPlusIsBad = isBadVersion(mid + 1);
-        if (!midIsBad && midPlusIsBad)
-            return mid + 1;
-        if (midIsBad && midPlusIsBad)
-            return searchBadVersion(begin,mid);
-        if (!midIsBad && !midPlusIsBad)
-            return searchBadVersion(mid+1,end);
-        return -1;
+        random = new Random();
     }
 
+    /** Resets the array to its original configuration and return it. */
+    public int[] reset() {
+        for (int i = 0; i < original.length; i++) {
+            current[i] = original[i];
+        }
+        return original;
+    }
+
+    /** Returns a random shuffling of the array. */
+    public int[] shuffle() {
+        HashSet<Integer> visited = new HashSet<>();
+        for(int i = 0; i < current.length; i++) {
+            if (!visited.contains(i)) {
+                int rand = random.nextInt(i+1);
+                int temp = current[rand];
+                current[rand] = current[i];
+                current[i] = temp;
+                visited.add(i);
+                visited.add(rand);
+            }
+        }
+        return current;
+    }
 }
