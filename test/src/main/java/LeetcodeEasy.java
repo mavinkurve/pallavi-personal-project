@@ -24,4 +24,29 @@ public class LeetcodeEasy {
         }
         return (position[0] == 0 && position[1] == 0);
     }
+
+    public int islandPerimeter(int[][] grid) {
+        int perimeter = 0;
+        for (int i = 0; i < grid[0].length; i++) {
+            for (int j = 0; j < grid.length; j++) {
+                perimeter += validEdgeCount(grid, i , j);
+            }
+        }
+        return perimeter;
+    }
+
+    private int validEdgeCount(int[][] grid, int x, int y) {
+        if (grid[x][y] == 0)
+            return 0;
+        int edges = 4;
+        if (x-1 >= 0 && grid[x-1][y] == 1)
+            edges--;
+        if (x + 1 < grid.length && grid[x+1][y] == 1)
+            edges--;
+        if (y-1 >= 0 && grid[x][y-1] == 1)
+            edges--;
+        if (y + 1 < grid.length && grid[x][y+1] == 1)
+            edges--;
+        return edges;
+    }
 }

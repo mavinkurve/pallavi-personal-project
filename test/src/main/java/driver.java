@@ -17,12 +17,17 @@ public class driver {
         ListProblems lp = new ListProblems();
         LeetcodeEasy ep = new LeetcodeEasy();
 
-        p("Judge circle: " + ep.judgeCircle("UlrlDrlr"));
+        int[][] grid = new int[][]{
+                {0,0,0,0},
+                {0,1,1,0},
+                {0,1,1,0},
+                {0,1,0,0}};
+        p("island perimeter: " + ep.islandPerimeter(grid));
 
         /*
         MinStack obj = new MinStack();
         obj.push(-2);
-        obj.push(0);
+        obj.push(0);7
         obj.push(-3);
         obj.push(5);
         p("top: " + obj.top());
