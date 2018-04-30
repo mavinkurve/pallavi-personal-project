@@ -16,7 +16,8 @@ public class driver {
         BitOps bo = new BitOps();
         ListProblems lp = new ListProblems();
 
-        p("find target range " + Arrays.toString(ap.searchRange(new int[]{5,7,7,8,8,10},6)));
+        int[] nums = new int[]{0,1,2,3,4,5};
+        ap.rotateArray(nums,8);
 
     }
 

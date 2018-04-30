@@ -4,6 +4,29 @@ import java.util.*;
 
 public class ArrayProblems {
 
+    public void rotateArray(int[] nums, int k) {
+        if (k > nums.length)
+            return;
+        System.out.println("Original array: " + Arrays.toString(nums));
+
+        reverseArray(nums,0,nums.length -1);
+        reverseArray(nums,0,k-1);
+        reverseArray(nums,k, nums.length-1);
+
+        System.out.println("Rotated array: " + Arrays.toString(nums));
+        return;
+    }
+
+    private void reverseArray(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
     public int findTarget(int[] nums, int start, int end, int target) {
         int mid = start + ((end - start) / 2);
         if (nums[mid] == target)
@@ -14,6 +37,7 @@ public class ArrayProblems {
             return findTarget(nums,start,mid,target);
         return findTarget(nums,mid+1, end, target);
     }
+
     public int[] searchRange(int[] nums, int target) {
         int[] range = new int[] {-1,-1};
         if (nums.length < 1)
