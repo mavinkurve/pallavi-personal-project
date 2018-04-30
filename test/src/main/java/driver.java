@@ -16,7 +16,27 @@ public class driver {
         BitOps bo = new BitOps();
         ListProblems lp = new ListProblems();
 
-        p(Arrays.toString(mp.plusOne(new int[]{-9})));
+        MinStack obj = new MinStack();
+        obj.push(-2);
+        obj.push(0);
+        obj.push(-3);
+        obj.push(5);
+        p("top: " + obj.top());
+        p("Min: " + obj.getMin());
+        obj.pop();
+        p("After popping: ");
+        p("top: " + obj.top());
+        p("Min: " + obj.getMin());
+        p("insert bigger value");
+        obj.push(7);
+        obj.push(10);
+        p("top: " + obj.top());
+        p("Min: " + obj.getMin());
+        p("insert smaller value");
+        obj.push(-7);
+        obj.push(-10);
+        p("top: " + obj.top());
+        p("Min: " + obj.getMin());
 
     }
 
