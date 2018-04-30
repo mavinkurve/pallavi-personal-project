@@ -4,10 +4,12 @@ public class MathProblems {
 
     public boolean isPowerOf3(int n) {
         //3,9,27
-        if ( n < 3 || (n % 3) != 0)
-            return false;
-        if (n == 3)
+        if (n == 1)
             return true;
+
+        if ((n % 3) != 0)
+            return false;
+
         return isPowerOf3(n / 3);
     }
 

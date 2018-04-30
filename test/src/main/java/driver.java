@@ -17,7 +17,7 @@ public class driver {
         ListProblems lp = new ListProblems();
         LeetcodeEasy ep = new LeetcodeEasy();
 
-        p("Is power of 3: " + mp.isPowerOf3(89));
+        p("Is power of 1: " + mp.isPowerOf3(1));
 
         /*
         MinStack obj = new MinStack();
