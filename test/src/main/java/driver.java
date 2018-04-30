@@ -17,8 +17,7 @@ public class driver {
         ListProblems lp = new ListProblems();
         LeetcodeEasy ep = new LeetcodeEasy();
 
-        p("Anagram mapping: " + Arrays.toString(sp.anagramMappings(new int[]{12,12,12,12,12},
-                           new int[]{12,12,12,12,12})));
+        p("Is power of 3: " + mp.isPowerOf3(89));
 
         /*
         MinStack obj = new MinStack();
