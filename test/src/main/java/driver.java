@@ -15,7 +15,11 @@ public class driver {
         TreeProblems tp = new TreeProblems();
         BitOps bo = new BitOps();
         ListProblems lp = new ListProblems();
+        LeetcodeEasy ep = new LeetcodeEasy();
 
+        p("Judge circle: " + ep.judgeCircle("UlrlDrlr"));
+
+        /*
         MinStack obj = new MinStack();
         obj.push(-2);
         obj.push(0);
@@ -37,6 +41,7 @@ public class driver {
         obj.push(-10);
         p("top: " + obj.top());
         p("Min: " + obj.getMin());
+        */
 
     }
 
