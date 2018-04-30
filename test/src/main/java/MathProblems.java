@@ -2,6 +2,42 @@ import java.util.*;
 
 public class MathProblems {
 
+    public int[] plusOne(int[] digits) {
+        if (digits.length == 0)
+            return new int[]{};
+        Stack<Integer> answer = new Stack<>();
+        int temp = digits[digits.length-1] + 1;
+        int carryOver = 0;
+        if (temp > 9) {
+            carryOver = 1;
+            answer.push(0);
+        }
+        else
+            answer.push(temp);
+        for (int i = digits.length - 2; i >= 0; i--) {
+                temp = digits[i] + carryOver;
+                if (temp > 9) {
+                    carryOver = 1;
+                    answer.push(0);
+                }
+                else {
+                    answer.push(temp);
+                    carryOver = 0;
+                }
+        }
+        if (carryOver > 0)
+            answer.push(carryOver);
+
+        int[] answerArray = new int[answer.size()];
+        int index = 0;
+        while(!answer.isEmpty()) {
+                answerArray[index] = answer.pop();
+                index++;
+        }
+        return answerArray;
+    }
+
+
     public int kthSmallest(int[][] matrix, int k) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {

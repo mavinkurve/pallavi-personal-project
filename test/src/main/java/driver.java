@@ -16,8 +16,7 @@ public class driver {
         BitOps bo = new BitOps();
         ListProblems lp = new ListProblems();
 
-        int[] nums = new int[]{0,1,2,3,4,5};
-        ap.rotateArray(nums,8);
+        p(Arrays.toString(mp.plusOne(new int[]{-9})));
 
     }
 
