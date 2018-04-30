@@ -4,6 +4,28 @@ import java.util.stream.IntStream;
 
 public class StringProblems {
 
+    public int[] anagramMappings(int[] A, int[] B) {
+        Map<Integer,List<Integer>> map = new HashMap<>();
+        int[] answer = new int[A.length];
+        for (int i = 0; i < B.length; i++) {
+            List<Integer> locations = new ArrayList<>();
+            locations.add(i);
+            if (map.containsKey(B[i])) {
+                locations.addAll(map.get(B[i]));
+            }
+            map.put(B[i],locations);
+        }
+
+        for (int i = 0; i < A.length; i++) {
+            List<Integer> locations = map.get(A[i]);
+            answer[i] = locations.remove(0);
+            if (locations.size() > 0)
+                map.put(A[i], locations);
+        }
+
+        return answer;
+    }
+
     public List<String> fizzBuzz(int n) {
         List<String> fizzbuzz = new ArrayList<>();
         for (int i = 1; i <= n; i++) {

@@ -17,12 +17,8 @@ public class driver {
         ListProblems lp = new ListProblems();
         LeetcodeEasy ep = new LeetcodeEasy();
 
-        int[][] grid = new int[][]{
-                {0,0,0,0},
-                {0,1,1,0},
-                {0,1,1,0},
-                {0,1,0,0}};
-        p("island perimeter: " + ep.islandPerimeter(grid));
+        p("Anagram mapping: " + Arrays.toString(sp.anagramMappings(new int[]{12,12,12,12,12},
+                           new int[]{12,12,12,12,12})));
 
         /*
         MinStack obj = new MinStack();
