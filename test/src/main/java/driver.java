@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class driver {
 
@@ -16,32 +13,15 @@ public class driver {
         BitOps bo = new BitOps();
         ListProblems lp = new ListProblems();
         LeetcodeEasy ep = new LeetcodeEasy();
+        IntervalProblems ip = new IntervalProblems();
 
-        p("Is power of 1: " + mp.isPowerOf3(1));
+        int matrix[][] = {
+                {1,2,3,4},
+                {5,6,7,8},
+                {9,10,11,12}
+        };
 
-        /*
-        MinStack obj = new MinStack();
-        obj.push(-2);
-        obj.push(0);7
-        obj.push(-3);
-        obj.push(5);
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        obj.pop();
-        p("After popping: ");
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        p("insert bigger value");
-        obj.push(7);
-        obj.push(10);
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        p("insert smaller value");
-        obj.push(-7);
-        obj.push(-10);
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        */
+        p("Roman: " + sp.romanToInt("MDCXCV"));
 
     }
 

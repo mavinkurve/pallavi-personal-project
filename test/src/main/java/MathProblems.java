@@ -1,13 +1,34 @@
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class MathProblems {
+
+    public String fractionToDecimal(int numerator, int denominator) {
+        if (denominator == 0) {
+            return "0";
+        }
+        System.out.println(numerator - (numerator / denominator));
+        double div = (double)numerator / (double) denominator;
+        String[] str = String.valueOf(div).split(".");
+
+        return String.valueOf(div);
+
+    }
+
+    public boolean isPowerOfTwo(int n) {
+        if (n <= 0)
+            return false;
+        while (n >= 1 && n % 2 == 0)
+            n = n / 2;
+        return (n == 1);
+    }
 
     public boolean isPowerOf3(int n) {
         //3,9,27
         if (n == 1)
             return true;
 
-        if ((n % 3) != 0)
+        if ((n % 3) != 0 || n == 0)
             return false;
 
         return isPowerOf3(n / 3);
@@ -123,23 +144,6 @@ public class MathProblems {
             return 1;
         else
             return x * myPow(x,n-1);
-    }
-
-    public List<Interval> merge(List<Interval> intervals) {
-        Collections.sort(intervals,new IntervalComparator());
-        for (int i = 0; i < intervals.size(); i++) {
-            for (int j = 0; j < i; j ++) {
-                if (intervals.get(i).start <= intervals.get(j).end) {
-                    Interval update = intervals.get(j);
-                    update.end = Math.max(intervals.get(i).end,intervals.get(j).end);
-                    intervals.set(j,update);
-                    intervals.remove(i);
-                    i--;
-                    break;
-                }
-            }
-        }
-        return intervals;
     }
 
     public int maxIncreaseKeepingSkyline(int[][] grid) {

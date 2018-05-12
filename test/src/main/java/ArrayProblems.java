@@ -4,6 +4,61 @@ import java.util.*;
 
 public class ArrayProblems {
 
+    public int numIslands(char[][] grid) {
+        if (grid.length == 0)
+            return 0;
+        int islands = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    islands++;
+                    checkNeighbors(grid,i,j);
+                }
+            }
+        }
+        return islands;
+    }
+
+    // collapse neighbors
+    public void checkNeighbors(char[][] grid, int i, int j) {
+        if (grid[i][j] == 0)
+            return;
+        else {
+            grid[i][j] = 0;     // set to 0 before returning
+            if (i+1 < grid.length)
+                checkNeighbors(grid,i+1, j);
+            if (j+1 < grid[0].length)
+                checkNeighbors(grid, i, j+1);
+            if (i-1 >= 0)
+                checkNeighbors(grid,i-1,j);
+            if (j-1 >= 0)
+                checkNeighbors(grid,i,j-1);
+            return;
+        }
+    }
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> answer = new ArrayList<>();
+        if (nums.length == 0)
+            return answer;
+        int current, next;
+        for (int i = 0; i < nums.length; i++) {
+            current = nums[i];
+            nums[i] = -1;
+            do{
+                next = nums[current - 1];
+                nums[current - 1] = current;
+                current = next;
+            }while (current != -1 && current != nums[current - 1] );
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == -1)
+                answer.add(i+1);
+        }
+        return answer;
+    }
+
+
     public void rotateArray(int[] nums, int k) {
         if (k > nums.length)
             return;

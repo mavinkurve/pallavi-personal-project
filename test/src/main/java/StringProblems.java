@@ -4,6 +4,170 @@ import java.util.stream.IntStream;
 
 public class StringProblems {
 
+    public int romanToInt(String s) {
+        if (s == null || s.length() == 0)
+            return 0;
+        s = s.toUpperCase();
+        Map<String,Integer> values = new HashMap<>();
+        values.put("IV",4);
+        values.put("IX",9);
+        values.put("XL",40);
+        values.put("XC",90);
+        values.put("CD", 400);
+        values.put("CM",900);
+        values.put("I",1);
+        values.put("V",5);
+        values.put("X", 10);
+        values.put("L",50);
+        values.put("C",100);
+        values.put("D",500);
+        values.put("M", 1000);
+
+        List<String> digits = new ArrayList<>();
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if ((i + 2) <= s.length() && values.containsKey(s.substring(i,i+2))){
+                digits.add(s.substring(i,i+2));
+                i++;
+                continue;
+            }
+            digits.add(s.substring(i,i+1));
+        }
+        int answer = 0;
+        for (String d : digits) {
+            answer += values.get(d);
+        }
+        return answer;
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> spiral = new ArrayList<>();
+        if (matrix.length == 0)
+            return spiral;
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int rowStart = 0, rowEnd = n-1;
+        int colStart = 1, colEnd = m-1;
+
+        //loop till all elements printed
+        while(rowStart <= rowEnd && colStart <= colEnd) {
+            spiral.addAll(getRow(matrix,rowStart, rowStart, rowEnd));
+            spiral.addAll(getCol(matrix, colEnd, colStart,colEnd));
+            spiral.addAll(getRow(matrix, rowEnd, rowEnd-1,rowStart));
+            spiral.addAll(getCol(matrix, colStart-1, colEnd-1, colStart));
+
+            rowStart++;
+            rowEnd--;
+            colStart++;
+            colEnd--;
+        }
+        return spiral.subList(0,(n*m));
+    }
+
+    private List<Integer> getRow(int[][] matrix, int rowIndex, int start, int end) {
+        List<Integer> row = new ArrayList<>();
+        if (start < 0 || end > matrix[0].length)
+            return row;
+        if (start <= end) {
+            for (int i = start; i <= end; i++) {
+                row.add(matrix[rowIndex][i]);
+            }
+        }
+        else {
+            for (int i = start; i >= end; i--) {
+                row.add(matrix[rowIndex][i]);
+            }
+        }
+        return row;
+    }
+
+    private List<Integer> getCol(int[][] matrix, int colIndex, int start, int end) {
+        List<Integer> col = new ArrayList<>();
+        if (start < 0 || end > matrix.length )
+            return col;
+        if (start <= end) {
+            for (int i = start; i <= end; i++) {
+                col.add(matrix[i][colIndex]);
+            }
+        }
+        else {
+            for (int i = start; i >= end; i--) {
+                col.add(matrix[i][colIndex]);
+            }
+        }
+        return col;
+    }
+
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.isEmpty())
+            return null;
+        String[] letters = new String[]{"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        char[][] permuteArray = new char[digits.length()][4];
+        List<String> answer = new ArrayList<>();
+        for (int i = 0; i < digits.length(); i++) {
+            permuteArray[i] = letters[digits.charAt(i) - '0'].toCharArray();
+        }
+        answer = getPermutations(permuteArray, answer, 0);
+        return answer;
+    }
+
+    public List<String> getPermutations(char[][] array, List<String> partial, int index) {
+        if (index == array.length-1) {
+            for (int i = 0; i < array[index].length; i++) {
+                partial.add(String.valueOf(array[index][i]));
+            }
+            return partial;
+        }
+        else {
+            partial = getPermutations(array,partial,index + 1);
+            List<String> newPermutes = new ArrayList<>();
+            for (int i = 0; i < array[index].length; i++) {
+                for (String p : partial) {
+                    newPermutes.add(array[index][i] + p);
+                }
+            }
+            partial.clear();
+            partial.addAll(newPermutes);
+        }
+        return partial;
+    }
+
+    public String reverseVowels(String s) {
+
+        if (s.length() <= 1)
+            return s;
+        HashSet<Character> vowels = new HashSet<>();
+        vowels.addAll(Arrays.asList('a','e','i','o','u','A', 'E', 'I', 'O','U'));
+        char[] chars = s.toCharArray();
+
+        for(int start=0, end=chars.length-1; start < end;){
+            if (!vowels.contains(chars[start]))
+                start++;
+            if (!vowels.contains(chars[end]))
+                end--;
+            if (vowels.contains(chars[start]) && vowels.contains(chars[end])) {
+                char temp = chars[start];
+                chars[start] = chars[end];
+                chars[end] = temp;
+                start++;
+                end--;
+            }
+        }
+        return new String(chars);
+    }
+
+    public int firstUniqChar(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.containsKey(s.charAt(i)) ? map.get(s.charAt(i)) + 1 : 1);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsKey(s.charAt(i)) && map.get(s.charAt(i)) == 1)
+                return i;
+        }
+        return -1;
+    }
+
     public int[] anagramMappings(int[] A, int[] B) {
         Map<Integer,List<Integer>> map = new HashMap<>();
         int[] answer = new int[A.length];

@@ -1,52 +1,38 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class MinStack {
 
     PriorityQueue<Integer> heap;
-    Map<Integer,Integer> locationMap;
-    Map<Integer,Integer> valueMap;
-
-    int size = 0;
-    int top = 0;
+    Stack<Integer> stack;
 
     public MinStack() {
         heap = new PriorityQueue<>();
-        locationMap = new HashMap<>();
-        valueMap = new HashMap<>();
+        stack = new Stack<>();
     }
 
     // push element x onto stack
     public void push (int x) {
         heap.offer(x);
-        size++;
-        locationMap.put(size, x);
-        valueMap.put(x, size);
-        top = x;
+        stack.push(x);
     }
 
     // remove element on top of stack
     public void pop() {
-        int x = valueMap.remove(top);
-        locationMap.remove(x);
-        heap.remove(top);
-        size--;
-        top = locationMap.get(size);
+        int x = stack.pop();
+        heap.remove(x);
     }
 
     // get top element
     public int top() {
-        return top;
+        return stack.peek();
     }
 
     // get minimum element in stack
     public int getMin() {
         int x = heap.poll();
-        int location = valueMap.remove(x);
-        locationMap.remove(location);
-        size--;
         return x;
     }
+
+
 
 }

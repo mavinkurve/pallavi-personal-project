@@ -27,8 +27,8 @@ public class LeetcodeEasy {
 
     public int islandPerimeter(int[][] grid) {
         int perimeter = 0;
-        for (int i = 0; i < grid[0].length; i++) {
-            for (int j = 0; j < grid.length; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 perimeter += validEdgeCount(grid, i , j);
             }
         }
