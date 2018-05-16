@@ -1,9 +1,68 @@
-import org.omg.PortableInterceptor.INACTIVE;
-
 import java.util.*;
 
 public class ArrayProblems {
 
+    public int[] productExceptSelf(int[] nums) {
+        int[] product = new int[nums.length];
+        int total = 1;
+        for (int i = 0; i < nums.length; i++) {
+            total *= nums[i];
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0 || nums[i] == 1)
+                product[i] = total;
+            else
+                product[i] = performDivision(total,nums[i]);
+        }
+        return product;
+    }
+
+    private Integer performDivision(int a, int b) {
+        if (a < b)
+            return 0;
+        if (b == 0)
+            return null;
+        int div = 1;
+        while (true) {
+            a = a - b;
+            if (a == 0 || a < b)
+                return div;
+            div++;
+        }
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        HashSet<List<Integer>> set = new HashSet<>();
+        Arrays.sort(nums);
+        for (int i = 0; i< nums.length; i++) {
+            int lo = i+1, hi = nums.length-1, sum = 0 - nums[i];
+            while (lo < hi) {
+                if (nums[lo] + nums[hi] == sum) {
+                    set.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+                    lo++;
+                    hi--;
+                } else {
+                    if (nums[lo] + nums[hi] < sum)
+                        lo++;
+                    else hi--;
+                }
+            }
+        }
+
+        return new ArrayList<>(set);
+    }
+
+    public boolean findTarget(int[] nums, int start, int end, int target) {
+        if (start >= nums.length || nums[start] > target)
+            return false;
+        int mid = start + (end-start)/2;
+        if (nums[mid] == target)
+            return true;
+        if (nums[mid] < target)
+            return findTarget(nums,mid+1,end,target);
+        else
+            return findTarget(nums,start,mid,target);
+    }
     public int numIslands(char[][] grid) {
         if (grid.length == 0)
             return 0;
@@ -81,7 +140,7 @@ public class ArrayProblems {
             end--;
         }
     }
-
+/*
     public int findTarget(int[] nums, int start, int end, int target) {
         int mid = start + ((end - start) / 2);
         if (nums[mid] == target)
@@ -117,7 +176,7 @@ public class ArrayProblems {
         }
         return range;
     }
-
+*/
     public List<Integer> countSmaller(int[] nums) {
         List<Integer> counts = new ArrayList<>();
 

@@ -1,0 +1,74 @@
+Q: How would you implement Flood Fill in a paint program?
+In Flood Fill, you start with a bitmap with some bits set, and others blank. The user selects a point on the bitmap, and then your program fills in the bitmap outward from that point until a boundary is encountered.
+
+  0123456789
+A #####_####
+B #_#_#_#___
+C #_#_#_____
+D #_######__
+E ####_#____
+
+Clicking in cell B1, C1, or D1 would be the "left section" in this case, and should yield:
+
+  0123456789
+A #####_####
+B ###_#_#___
+C ###_#_____
+D ########__
+E ####_#____
+
+Data structure used:
+    Use a double dimensional array to represent the bitmap. Value of 1 represents a set bit and 0 otherwise.
+    Designed method would take in the original bitmap as double array and a pair of integers to represent the bit
+    user wants to set. It will return the flood filled bitmap as answer.
+
+Algorithm:
+    Use recursion to set bits in array vertically and horizontally for each node.
+    Base case: if node value is 1 -> return
+    Recursion:
+               else
+                    set value to 1
+                    for each eligible neighbor -> run loop
+    Analysis:
+    This algorithm will visit and modify each node at most once. In the worst case, it will need to touch every single
+    node in the matrix. So the overall runtime of this would be O(mn) where m is the number of rows and n is the number
+    of columns. This algorithm is constant-time space complexity as we consume no additional storage other than the int
+    used to store the value to be set.
+
+
+Code:
+
+    public void floodFill(int[][] bitmap, int row, int col) {
+        // check for invalid input
+        if (row >= bitmap.length || col >= bitmap[0].length)
+            return;
+
+        // check what should be the desired value
+        int desiredValue = 1 - bitmap[row][col];
+        setValue(bitmap,row,col,desiredValue);
+    }
+
+    public void setValue(int[][] bitmap, int row, int col, int value) {
+        // check for invalid input
+        if (row >= bitmap.length || col >= bitmap[0].length)
+            return;
+        if (bitmap[row][col] == value)
+            return;
+        bitmap[row][col] = value;
+        setValue(bitmap,row+1,col,value);
+        setValue(bitmap,row,col+1,value);
+        setValue(bitmap,row-1,col,value);
+        setValue(bitmap,row,col-1,value);
+    }
+
+Test Cases:
+    1. Uneven bitmap (unequal number of rows and columns)
+    2. Bitmap with all values set to 1
+    3. Bitmap with all values set to 0
+    4. User selecting a cell that would flood fill exactly one cell
+    5. User selecting a cell that would flood entire row or entire column
+    6. Calling method with negative integers with selected cell value
+    7. Passing in a bitmap with values other than 1 and 0
+    8. Passing in a bitmap that consists of exactly one row or exactly one column
+    9. Passing in a bitmap with 0 rows and columns (empty matrix)
+    10. Passing in a single cell bitmap and user selects the same cell (0,0)
