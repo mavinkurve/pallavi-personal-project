@@ -1,4 +1,20 @@
+import java.util.HashMap;
+
 public class LeetcodeEasy {
+
+    public int climbStairs(int n) {
+        HashMap<Integer,Integer> memoTable = new HashMap<>();
+        memoTable.put(1,1);
+        memoTable.put(2,2);
+        return getStairs(n, memoTable);
+    }
+
+    private int getStairs(int n, HashMap<Integer,Integer> memoTable) {
+        if (memoTable.containsKey(n))
+            return memoTable.get(n);
+        memoTable.put(n, getStairs(n-1, memoTable) + getStairs(n-2, memoTable));
+        return memoTable.get(n);
+    }
 
     public boolean judgeCircle(String moves) {
 

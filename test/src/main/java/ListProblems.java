@@ -1,7 +1,174 @@
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ListProblems {
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<Integer> s1 = new Stack<>();
+        Stack<Integer> s2 = new Stack<>();
+
+        while(l1 != null){
+            s1.push(l1.val);
+            l1 = l1.next;
+        }
+
+        while(l2 != null){
+            s2.push(l2.val);
+            l2 = l2.next;
+        }
+
+        int carry = 0;
+        ListNode sum = new ListNode(-1);
+        while (!s1.isEmpty() && !s2.isEmpty()) {
+            int digit = carry + s1.pop() + s2.pop();
+            if (digit > 9) {
+                carry = 1;
+                digit = digit % 10;
+            }
+            else
+                carry = 0;
+            ListNode digitNode = new ListNode(digit);
+            digitNode.next = sum.next;
+            sum.next = digitNode;
+        }
+        while (s1.size() < s2.size()) {
+            s1.push(0);
+        }
+        while(s2.size() < s1.size()) {
+            s2.push(0);
+        }
+        while (!s1.isEmpty() && !s2.isEmpty()) {
+            int digit = carry + s1.pop() + s2.pop();
+            if (digit > 9) {
+                carry = 1;
+                digit = digit % 10;
+            }
+            else
+                carry = 0;
+            ListNode digitNode = new ListNode(digit);
+            digitNode.next = sum.next;
+            sum.next = digitNode;
+        }
+        return sum.next;
+    }
+
+    public ListNode partition(ListNode head, int x) {
+        List<Integer> original = new ArrayList<>();
+        ListNode dummy = head;
+        while (dummy != null) {
+            original.add(dummy.val);
+            dummy = dummy.next;
+        }
+        List<Integer> partition = new ArrayList<>();
+        partition.addAll(original.stream().filter(i -> i < x).collect(Collectors.toList()));
+        partition.addAll(original.stream().filter(i -> i >= x).collect(Collectors.toList()));
+        dummy = head;
+        for (int i = 0; i < partition.size(); i++) {
+            dummy.val = partition.get(i);
+            dummy = dummy.next;
+        }
+        return head;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        ListNode prev = new ListNode(-1);
+        prev.next = head;
+        ListNode dummy = prev;
+
+        while (head != null) {
+            while (head.next != null && head.next.val == head.val){
+                prev.next = head.next.next;
+            }
+            head = head.next;
+        }
+        return dummy.next;
+    }
+
+    public ListNode rotateRight(ListNode head, int k) {
+        ListNode dummy = head;
+        List<Integer> list = new ArrayList<>();
+        while (dummy != null) {
+            list.add(dummy.val);
+            dummy = dummy.next;
+        }
+        dummy = head;
+        if (k > list.size())
+            k = k % list.size();
+        Collections.rotate(list,k);
+        for (int i = 0; i < list.size(); i++) {
+            dummy.val = list.get(i);
+            dummy = dummy.next;
+        }
+        return head;
+        }
+
+        public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        ListNode restOfListHead = head.next.next;
+        ListNode next = head.next;
+        next.next = head;
+        head.next = swapPairs(restOfListHead);
+
+        return next;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null)
+            return head;
+        ListNode dummy = head;
+        ListNode prev = head;
+        ListNode slow = head;
+        ListNode fast = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        System.out.println("Slow is at: " + slow.val);
+        System.out.println("Prev is at: " + prev.val);
+
+        while (fast != null) {
+            ListNode temp = slow;
+            slow = slow.next;
+            fast = fast.next;
+            prev = temp;
+        }
+        System.out.println("Slow is at: " + slow.val);
+        System.out.println("Prev is at: " + prev.val);
+
+        if (prev == slow)   // removing head node
+            return slow.next;
+        prev.next = slow.next;
+        return dummy;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if (head == null)
+            return true;
+
+        List<Integer> list = new ArrayList<>();
+
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+
+        if (list.size()  <= 1)
+            return true;
+
+        int start = 0;
+        int end = list.size() - 1;
+        while (end > start) {
+            if (!list.get(start).equals(list.get(end)))
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
 
     public ListNode oddEvenList(ListNode head) {
         if (head == null)
@@ -51,7 +218,7 @@ public class ListProblems {
         return dummy.next;
     }
 
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
         System.out.println("Adding ");
         l1.print();
         l2.print();
@@ -103,7 +270,7 @@ public class ListProblems {
         return root;
     }
 
-    public ListNode deleteDuplicates(ListNode head) {
+    public ListNode deleteDuplicates2(ListNode head) {
         if (head == null)
             return null;
         TreeMap<Integer,Integer> map = new TreeMap<>();

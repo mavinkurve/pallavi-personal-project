@@ -4,6 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BitOps {
+
+    public int reverseBits(int n) {
+        char[] chars = Integer.toBinaryString(n).toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (int i = chars.length - 1; i >= 0; i--) {
+            sb.append(chars[i]);
+        }
+        return Integer.parseInt(sb.toString());
+    }
+
+    public int[] countBits(int num) {
+        int[] answer = new int[num+1];
+        for (int i = 0; i <= num ; i++) {
+            answer[i] = Long.bitCount(i);
+        }
+        return answer;
+    }
+
     public int totalHammingDistance(int[] nums) {
         int sum = 0;
         List<String> bits = new ArrayList<>();

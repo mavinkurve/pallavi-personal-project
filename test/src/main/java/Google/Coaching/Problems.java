@@ -20,6 +20,8 @@ public class Problems {
         if (array[mid] > target) {
             if (array[start] < target)
                 return search(array, target, start, mid);
+            if (array[start] > target && array[end] > target)
+                return search(array, target, start, mid);
             if (array[end] > target)
                 return search(array, target, mid + 1, end);
         }
@@ -30,8 +32,8 @@ public class Problems {
 
 
     public static void main(String[] args) {
-        int[] array = new int[]{5,4,3,2,1};
-        System.out.println(searchInRotatedArray(array,4));
+        int[] array = new int[]{4,5,6,7,0,1,2};
+        System.out.println(searchInRotatedArray(array,0));
 /*
 
         int bitmap[][] = {

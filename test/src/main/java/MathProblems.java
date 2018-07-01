@@ -3,6 +3,89 @@ import java.util.*;
 
 public class MathProblems {
 
+    public int maxProduct(int[] nums) {
+        List<Integer> negatives = new ArrayList<>();
+        int zeroIndex = -1;
+        List<Integer> runningProduct = new ArrayList<>();
+        // get locations of -ve numbers
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < 0)
+                negatives.add(i);
+            if (nums[i] == 0)
+                zeroIndex = i;
+        }
+        if (negatives.size() == 0) {
+            if (zeroIndex > -1) {
+                int productLeft = nums[0], productRight = nums[zeroIndex + 1];
+                for (int i = 1; i < zeroIndex; i++) {
+                    productLeft *= nums[i];
+                }
+                for (int i = zeroIndex + 2; i < nums.length; i++) {
+                    productRight *= nums[i];
+                }
+                return -1;
+            }
+        }
+        return -1;
+    }
+
+    public boolean isPalindrome(int x) {
+        if (x < 0)
+            return false;
+        if (x < 10)
+            return true;
+        int original = x;
+        int reverse = 0;
+        do {
+            reverse = (reverse * 10) + (x %10);
+            x = x / 10;
+        } while (x > 9);
+        reverse = (reverse * 10) + x;
+        return reverse == original;
+
+    }
+
+    public int numberOfArithmeticSlices(int[] A) {
+        int answer = 0;
+        for (int i = 0; i < A.length; i++) {
+            int j = i +1;
+            while((j+1 < A.length) && isArithmatic(A, j , j+1, A[i+1] - A[i])) {
+                j++;
+            }
+            if ((j - i) >= 2){
+                answer += getPermutesOfMoreThan3(j-i + 1);
+            }
+        }
+        return answer;
+    }
+
+    private boolean isArithmatic(int[] array, int start, int end, int diff) {
+        for (int i = start; i < end; i++) {
+            if (array[i + 1] - array[i] != diff)
+                return false;
+        }
+        return true;
+    }
+
+    private int getPermutesOfMoreThan3(int n) {
+        int answer = 1;
+        long factN = factorial(n);
+        for (int i = 3; i < n; i++) {
+            answer += factN / (factN - factorial(i));
+        }
+        return answer;
+    }
+
+    private long factorial(int n){
+        long result = 1;
+
+        for (int factor = 2; factor <= n; factor++) {
+            result *= factor;
+        }
+
+        return result;
+    }
+
     public String fractionToDecimal(int numerator, int denominator) {
         if (denominator == 0) {
             return "0";

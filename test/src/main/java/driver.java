@@ -15,20 +15,17 @@ public class driver {
         LeetcodeEasy ep = new LeetcodeEasy();
         IntervalProblems ip = new IntervalProblems();
 
-        int matrix[][] = {
-                {1,2,3,4},
-                {5,6,7,8},
-                {9,10,11,12}
-        };
+        TreeNode root = new TreeNode(1,2,3);
+        root.left.left = new TreeNode(4);
+        root.right.left = new TreeNode(5);
+        root.right.left.left = new TreeNode(7);
+        root.right.right = new TreeNode(6);
 
-
-        ap.productExceptSelf(new int[]{1,2,3,4});
+        p(sp.findMaxForm(new String[]{"10", "0001", "111001", "1", "0"}, 5, 3));
     }
 
-    private static void p(String s) {
+    private static void p(Object s) {
         System.out.println(s);
     }
-
-
 
 }
