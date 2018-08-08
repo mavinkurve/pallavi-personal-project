@@ -1,41 +1,25 @@
-import java.util.*;
-
-class Solution {
-
-    int[] original;
-    int[] current;
-    Random random;
-
-    public Solution(int[] nums) {
-        original = nums;
-        current = new int[original.length];
-        for (int i = 0; i < original.length; i++) {
-            current[i] = original[i];
-        }
-        random = new Random();
+public class Solution extends GuessGame {
+    public Solution(int a) {
+        super(a);
     }
 
-    /** Resets the array to its original configuration and return it. */
-    public int[] reset() {
-        for (int i = 0; i < original.length; i++) {
-            current[i] = original[i];
-        }
-        return original;
+    public int guessNumber(int n) {
+       return guessNumber(0,n);
     }
 
-    /** Returns a random shuffling of the array. */
-    public int[] shuffle() {
-        HashSet<Integer> visited = new HashSet<>();
-        for(int i = 0; i < current.length; i++) {
-            if (!visited.contains(i)) {
-                int rand = random.nextInt(i+1);
-                int temp = current[rand];
-                current[rand] = current[i];
-                current[i] = temp;
-                visited.add(i);
-                visited.add(rand);
-            }
-        }
-        return current;
+    public int guessNumber(int start, int end) {
+        if (guess(start) == 0)
+            return start;
+        if (guess(end) == 0)
+            return end;
+        int mid = start + (end-start)/2;
+        int gMid = guess(mid);
+        if (gMid == 0)
+            return mid;
+        if (gMid < 0)
+            return guessNumber(start,mid);
+        return guessNumber(mid+1, end);
+
+
     }
 }

@@ -1,0 +1,59 @@
+Given a rotated sorted array of integers, and a number n, write an algorithm to find the number in the array.
+Sorted Array: [ 1, 2, 3, 4, 5, 6, 7 , 8, 9]
+Rotated Sorted Array [ 4, 5, 6, 7, 8, 9, 1, 2, 3]
+(Please note we do not know the number of places by which the array has been rotated, we just know that the array is rotated)
+
+Algorithm:
+    Searching in a sorted array can be performed in O(log n) time using binary search. In every iteration of search, we
+    eliminate half of the array from search space. But in a rotated array, it would be difficult to calculate boundaries
+    of the search since the elements do not appear to be in sorted order due to rotation. So some extra logic would need
+    to be applied to determine which half of the array should be eliminated in each step of the binary search.
+
+    In particular, we can examine the boundaries of the array length under consideration as well as the mid value to
+    make a guess about which portion of array to search next.
+    e.g.
+    if target is less than the mid value of array, it can appear on left if rotation pivot is on right and vice versa.
+
+    Analysis: This will be O(log n) algorithm as we effectively eliminate half of search space in every iteration.
+
+Code:
+        public static int searchInRotatedArray(int[] array, int element) {
+            return search(array,element,0,array.length-1);
+        }
+
+        public static int search(int[] array, int target, int start, int end) {
+            if (start > end)
+                return -1;      // target not found
+            if (array[start] == target)
+                return start;
+            if (array[end] == target)
+                return end;
+            int mid = start + ((end - start) / 2);
+            if (array[mid] == target)
+                return mid;
+
+            if (array[mid] > target) {
+                if (array[start] < target)
+                    return search(array, target, start, mid);
+                if (array[end] > target)
+                    return search(array, target, mid + 1, end);
+            }
+            if (array[start] > target && array[end] < target)
+                return search(array, target, start, mid);
+            return search(array, target, mid + 1, end);
+        }
+
+Test Cases:
+    1. Search in array with pivot index in first half
+    2. Search in array with pivot index in second half
+    3. Search in array with pivot index exactly at middle value
+    4. Odd and even length arrays
+    5. Search for non-existent value
+    6. Search for values occurring at index 0 and n
+    7. Search in a very long array
+    8. Search in a array in descending order (rotation index = n)
+    9. Search in a unrotated array
+    10. Search in empty array
+    11. Search in array of size 1 for the same value
+
+

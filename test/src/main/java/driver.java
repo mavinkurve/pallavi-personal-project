@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class driver {
 
@@ -16,39 +13,19 @@ public class driver {
         BitOps bo = new BitOps();
         ListProblems lp = new ListProblems();
         LeetcodeEasy ep = new LeetcodeEasy();
+        IntervalProblems ip = new IntervalProblems();
 
-        p("Is power of 1: " + mp.isPowerOf3(1));
+        TreeNode root = new TreeNode(1,2,3);
+        root.left.left = new TreeNode(4);
+        root.right.left = new TreeNode(5);
+        root.right.left.left = new TreeNode(7);
+        root.right.right = new TreeNode(6);
 
-        /*
-        MinStack obj = new MinStack();
-        obj.push(-2);
-        obj.push(0);7
-        obj.push(-3);
-        obj.push(5);
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        obj.pop();
-        p("After popping: ");
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        p("insert bigger value");
-        obj.push(7);
-        obj.push(10);
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        p("insert smaller value");
-        obj.push(-7);
-        obj.push(-10);
-        p("top: " + obj.top());
-        p("Min: " + obj.getMin());
-        */
-
+        p(sp.findMaxForm(new String[]{"10", "0001", "111001", "1", "0"}, 5, 3));
     }
 
-    private static void p(String s) {
+    private static void p(Object s) {
         System.out.println(s);
     }
-
-
 
 }

@@ -1,4 +1,20 @@
+import java.util.HashMap;
+
 public class LeetcodeEasy {
+
+    public int climbStairs(int n) {
+        HashMap<Integer,Integer> memoTable = new HashMap<>();
+        memoTable.put(1,1);
+        memoTable.put(2,2);
+        return getStairs(n, memoTable);
+    }
+
+    private int getStairs(int n, HashMap<Integer,Integer> memoTable) {
+        if (memoTable.containsKey(n))
+            return memoTable.get(n);
+        memoTable.put(n, getStairs(n-1, memoTable) + getStairs(n-2, memoTable));
+        return memoTable.get(n);
+    }
 
     public boolean judgeCircle(String moves) {
 
@@ -27,8 +43,8 @@ public class LeetcodeEasy {
 
     public int islandPerimeter(int[][] grid) {
         int perimeter = 0;
-        for (int i = 0; i < grid[0].length; i++) {
-            for (int j = 0; j < grid.length; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 perimeter += validEdgeCount(grid, i , j);
             }
         }
