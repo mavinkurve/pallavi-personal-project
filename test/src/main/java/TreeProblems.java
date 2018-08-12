@@ -2,6 +2,74 @@
 import java.util.*;
 
 public class TreeProblems {
+
+
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null)
+            return null;
+        TreeNode newRoot = mergeHelper(root1,root2);
+        TreeNode left1 = root1 == null? null : root1.left;
+        TreeNode right1 = root1 == null? null : root1.right;
+        TreeNode left2 = root2 == null? null : root2.left;
+        TreeNode right2 = root2 == null? null : root2.right;
+        newRoot.left = mergeTrees(left1, left2);
+        newRoot.right = mergeTrees(right1, right2);
+        return newRoot;
+    }
+
+    private TreeNode mergeHelper(TreeNode n1, TreeNode n2) {
+        int value = 0;
+        if (n1 != null)
+            value += n1.val;
+        if (n2 != null)
+            value += n2.val;
+        return new TreeNode(value);
+    }
+        public void flatten(TreeNode root) {
+        if (root == null)
+            return;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        flatten(left);
+        flatten(right);
+
+        if (left != null) {
+            TreeNode leaf = left;
+            while (leaf.right != null)
+                leaf = leaf.right;
+            leaf.right = right;
+        }
+
+        root.left = null;
+        root.right = left;
+    }
+
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null)
+            return null;
+        if (root.val == key) {
+            if (root.right == null && root.left == null)
+                return null;
+            if (root.right != null && root.left != null) {
+
+            }
+            if (root.right != null) {
+                root.val = root.right.val;
+                root.right = deleteNode(root.right, root.right.val);
+            } else if (root.left != null) {
+                root.val = root.left.val;
+                root.left = deleteNode(root.left, root.left.val);
+            }
+        }
+        else {
+            if (key < root.val)
+                root.left = deleteNode(root.left, key);
+            else
+                root.right = deleteNode(root.right, key);
+        }
+        return root;
+    }
+
     public int findBottomLeftValue(TreeNode root) {
         return findBottomLeftValue(root, 1, new int[]{0, 0});
     }

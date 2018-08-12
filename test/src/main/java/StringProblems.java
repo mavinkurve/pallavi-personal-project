@@ -4,6 +4,103 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StringProblems {
+    public String longestPalindrome(String s) {
+        boolean[][] memoTable = new boolean[s.length()][s.length()];
+        String maxSequence = "";
+        for (int i = 0; i < s.length(); i++){
+            for (int j = i+1; j < s.length(); j++) {
+                palindromeHelper(s,i,j,memoTable);
+                if (memoTable[i][j]){
+                    if ((j-i) > maxSequence.length())
+                        maxSequence = s.substring(i,j);
+                    }
+            }
+        }
+        return maxSequence;
+    }
+
+    private boolean palindromeHelper(String s, int i, int j, boolean[][] memo) {
+        memo[i][j] = false;
+        if (i == j)
+            memo[i][j] = true;
+        if (memo[i+1][j-1] == true) {
+            if (s.charAt(i) == s.charAt(j))
+                memo[i][j] = true;
+        }
+        return memo[i][j];
+    }
+
+    public String getHint(String secret, String guess) {
+        int a = 0;
+        int b = 0;
+        char[] g = guess.toCharArray();
+        char[] s = secret.toCharArray();
+        for (int i = 0; i < g.length; i++) {
+            if (g[i] == s[i]) {
+                a++;
+                g[i] = 'X';
+                s[i] = 'X';
+            }
+        }
+        secret = new String(s);
+        for (int i = 0; i < g.length; i++) {
+            if (g[i] != 'X') {
+                int index = secret.indexOf(g[i]);
+                if (index > -1) {
+                    s[index] = 'X';
+                    b++;
+                    secret = new String(s);
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(a);
+        sb.append("A");
+        sb.append(b);
+        sb.append("B");
+        return sb.toString();
+    }
+
+    private List<Integer> getAllIndicesOf(char c, String s) {
+        List<Integer> indices = new ArrayList<>();
+        int index = s.indexOf(c);
+        while(index != -1){
+            indices.add(index);
+            index = s.indexOf(c,index);
+        }
+        return indices;
+    }
+
+    public boolean isSubsequence(String s, String t) {
+        if (s.length() == 0)
+            return true;
+        for (int i = 0; i < t.length(); i++) {
+            if (t.charAt(i) == s.charAt(0))
+                return isSubsequence(s.substring(1), t.substring(i + 1));
+        }
+        return false;
+    }
+
+    public String replaceWords(List<String> dict, String sentence) {
+        String[] words = sentence.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            List<String> roots = dict.stream().filter(root -> word.startsWith(root)).collect(Collectors.toList());
+            if (roots.isEmpty())
+                sb.append(" " + word);
+            else {
+                String shortestRoot = roots.get(0);
+                for (String root : roots) {
+                    if (root.length() < shortestRoot.length())
+                        shortestRoot = root;
+                }
+                sb.append(" " + shortestRoot);
+            }
+        }
+        return sb.toString().trim();
+    }
+
+
     public int findMaxForm(String[] strs, int m, int n) {
         List<String> sorted = sortByLength(strs);
         int zeros = m;
@@ -11,7 +108,7 @@ public class StringProblems {
         int formed = 0;
         for (int i = 0; i < sorted.size(); i++) {
             int[] onesAndZeros = getOnesAndZeros(sorted.get(i));
-            if (zeros - onesAndZeros[0] >= 0 && ones - onesAndZeros[1] >= 0){
+            if (zeros - onesAndZeros[0] >= 0 && ones - onesAndZeros[1] >= 0) {
                 zeros -= onesAndZeros[0];
                 ones -= onesAndZeros[1];
                 formed++;
@@ -22,14 +119,14 @@ public class StringProblems {
 
     private List<String> sortByLength(String[] strs) {
         List<String> sorted = new ArrayList<>();
-        TreeMap<Integer,List<String>> map = new TreeMap<>();
+        TreeMap<Integer, List<String>> map = new TreeMap<>();
         for (int i = 0; i < strs.length; i++) {
             List<String> strings = new ArrayList<>();
             if (map.containsKey(strs[i].length())) {
                 strings.addAll(map.get(strs[i].length()));
             }
             strings.add(strs[i]);
-            map.put(strs[i].length(),strings);
+            map.put(strs[i].length(), strings);
         }
         map.entrySet().forEach(entry -> sorted.addAll(entry.getValue()));
         return sorted;
@@ -38,22 +135,22 @@ public class StringProblems {
     private int[] getOnesAndZeros(String s) {
         int zeros = 0;
         int ones = 0;
-        for (int i = 0;i< s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '0') zeros++;
             else ones++;
         }
-        return new int[]{zeros,ones};
+        return new int[]{zeros, ones};
     }
 
     public String shiftingLetters(String S, int[] shifts) {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         for (int i = shifts.length - 2; i >= 0; i--) {
-            shifts[i] = (shifts[i+1] + shifts[i])%26;
+            shifts[i] = (shifts[i + 1] + shifts[i]) % 26;
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < shifts.length; i++) {
             int index = alphabet.indexOf(S.charAt(i));
-            int shift = (index + shifts[i])%26;
+            int shift = (index + shifts[i]) % 26;
             sb.append(alphabet.charAt(shift));
         }
         if (S.length() > shifts.length)
@@ -66,13 +163,14 @@ public class StringProblems {
         Collections.reverse(words);
         return words.stream().collect(Collectors.joining(" "));
     }
+
     public List<Integer> shortestToChar(String S, char C) {
         List<Integer> distances = new ArrayList<>();
         char[] chars = S.toCharArray();
         List<Integer> locations = new ArrayList<>();
         for (int i = 0; i < chars.length; i++) {
-           if (chars[i] == C)
-               locations.add(i);
+            if (chars[i] == C)
+                locations.add(i);
         }
         Collections.sort(locations);
         for (int i = 0; i < chars.length; i++) {
@@ -89,17 +187,17 @@ public class StringProblems {
         }
         return distances;
     }
+
     public String toGoatLatin(String S) {
-        List<Character> vowels = Arrays.asList('a','e','i','o','u','A','E','I','O','U');
+        List<Character> vowels = Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U');
         List<String> words = new ArrayList<>();
         String[] split = S.split(" ");
         for (int i = 0; i < split.length; i++) {
             StringBuilder sb = new StringBuilder();
             if (vowels.contains(split[i].charAt(0))) {
                 sb.append(split[i]);
-            }
-            else {
-                sb.append(split[i].substring(1,split[i].length()));
+            } else {
+                sb.append(split[i].substring(1, split[i].length()));
                 sb.append(split[i].charAt(0));
             }
             sb.append("ma");
@@ -115,17 +213,17 @@ public class StringProblems {
         List<List<Integer>> answer = new ArrayList<>();
         int start = 0;
         int current = 0;
-        while (current < S.length()-1) {
-            if (S.charAt(current) == S.charAt(current+1)) {
+        while (current < S.length() - 1) {
+            if (S.charAt(current) == S.charAt(current + 1)) {
                 current++;
                 continue;
-            } else if (current-start >= 2) {
+            } else if (current - start >= 2) {
                 answer.add(Arrays.asList(start, current));
             }
-            start = current+1;
+            start = current + 1;
             current++;
         }
-        if (current - start >= 2 ) {
+        if (current - start >= 2) {
             answer.add(Arrays.asList(start, current));
         }
         return answer;
@@ -147,8 +245,8 @@ public class StringProblems {
             }
             stack.push(S.charAt(i));
         }
-        while (!stack.isEmpty()){
-            sb.insert(0,stack.pop());
+        while (!stack.isEmpty()) {
+            sb.insert(0, stack.pop());
         }
         return sb.toString();
     }
