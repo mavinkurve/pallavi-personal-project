@@ -497,6 +497,29 @@ public class ArrayProblems {
         return;
     }
 
+    public List<Integer> findDisapperedNumbers(int[] nums) {
+        List<Integer> answer = new ArrayList<>();
+        int size = nums.length;
+        if (nums.length == 0)
+            return answer;
+        int current = 0;
+        for (int i = 0; i < nums.length; i++) {
+            while(nums[current] != current + 1){
+                int temp = nums[current];
+                nums[nums[current] + 1] = nums[current];
+                nums[current] = -1;
+                current = temp;
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == -1)
+               answer.add(i + 1);
+        }
+
+        return answer;
+    }
+
     private void reverseArray(int[] nums, int start, int end) {
         while (start < end) {
             int temp = nums[start];
