@@ -2,7 +2,58 @@
 import java.util.*;
 
 public class TreeProblems {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null)
+            return true;
+        if (p == null ^ q == null)
+            return false;
+        if (p.val != q.val)
+            return false;
+        return (isSameTree(p.left, q.left) && isSameTree(p.right,q.right));
+    }
 
+    public boolean findTarget(TreeNode root, int k) {
+        if (root == null)
+            return false;
+        int target = k - root.val;
+        if (target < root.val){
+            if (findInTree(root.left,target))
+                return true;
+        }
+        if (target > root.val){
+            if (findInTree(root.right,target))
+                return true;
+        }
+        if (root.left != null)
+         if(findInTree(root.right, k - root.left.val))
+             return true;
+        if (root.right != null)
+            return findInTree(root.left, k - root.right.val);
+        return false;
+    }
+
+    private boolean findInTree(TreeNode root, int target) {
+        if (root == null)
+            return false;
+        if (root.val == target)
+            return true;
+        if (target < root.val)
+            return findInTree(root.left, target);
+        return findInTree(root.right, target);
+    }
+
+    public TreeNode trimBST(TreeNode root, int L, int R) {
+        if (root.left != null)
+            root.left = trimBST(root.left, L, R);
+        if (root.right != null)
+            root.right = trimBST(root.right, L, R);
+
+        if (root.val < L)
+            return root.right;
+        if (root.val > R)
+            return root.left;
+        return root;
+    }
 
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
         if (root1 == null && root2 == null)

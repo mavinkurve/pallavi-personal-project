@@ -15,16 +15,16 @@ public class driver {
         LeetcodeEasy ep = new LeetcodeEasy();
         IntervalProblems ip = new IntervalProblems();
 
-        TreeNode root1 = new TreeNode(1,3,2);
-        root1.left.left = new TreeNode(5);
+        //TreeNode root = TreeNode.stringToTreeNode("[-3,-4,0,null,null,-2,1]");
+        //p(ap.lemonadeChange(new int[]{5,5,10,10,20}));
 
-        TreeNode root2 = new TreeNode(2,1,3);
-        root2.left.right = new TreeNode(4);
-        root2.right.right = new TreeNode(7);
+        int[][] image = new int[2][3];
+        image[0] = new int[]{0,0,0};
+        image[1] = new int[]{0,0,0};
 
-        p(sp.longestPalindrome("babad"));
+        p(ap.removeElement(new int[]{0,1,2,2,3,0,4,2},2));
 
-    }
+     }
 
     private static void p(Object s) {
         System.out.println(s);

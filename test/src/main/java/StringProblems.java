@@ -4,6 +4,104 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StringProblems {
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < magazine.length(); i++) {
+            map.put(magazine.charAt(i), map.getOrDefault(magazine.charAt(i),0) + 1);
+        }
+        for (int i = 0; i < ransomNote.length(); i++) {
+            int c = map.getOrDefault(ransomNote.charAt(i),0);
+            if (c == 0)
+                return false;
+            c -= 1;
+            map.put(ransomNote.charAt(i),c);
+        }
+        return true;
+    }
+
+    public boolean rotateString(String A, String B) {
+        if (A.length() == 0 || B.length() == 0)
+            return false;
+        String rotated = A;
+        do {
+            String firstChar = String.valueOf(rotated.charAt(0));
+            rotated = rotated.substring(1).concat(firstChar);
+            if (rotated.equals(B))
+                return true;
+        }while (!rotated.equals(A));
+        return false;
+    }
+
+    public String boldWords(String[] words, String S) {
+        System.out.println(S);
+        int[] isBold = new int[S.length()];
+        Arrays.fill(isBold, 0);
+        char[] chars = S.toCharArray();
+        int index = 0;
+        for (int i = 0; i < words.length; i++) {
+            if (words[i] == "wv")
+                System.out.println(words[i]);
+            for (int j = 0; j < chars.length; j++) {
+                if (chars[j] == words[i].charAt(index)) {
+                    index++;
+                }
+                else {
+                    j = j - index;
+                    index = 0;
+                }
+                if (index == words[i].length()) {
+                    System.out.println(words[i] + " j: " + j + " index: " + index);
+                    for (int k = j - index +1 ; k <= j; k++)
+                        isBold[k] = 1;
+                    index = 0;
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean inLoop = false;
+        for (int i = 0; i < chars.length; i++) {
+            if (isBold[i] == 1 && !inLoop) {
+                sb.append("<b>");
+                inLoop = true;
+            }
+            if (inLoop && isBold[i] == 0) {
+                sb.append("</b>");
+                inLoop = false;
+            }
+            sb.append(chars[i]);
+        }
+        return sb.toString();
+    }
+
+    public String mostCommonWord(String paragraph, String[] banned) {
+        Set<String> bannedWords = new HashSet<>(Arrays.asList(banned));
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        int max = 0;
+        String current = "";
+        String input = "";
+        for (Character c : paragraph.toCharArray()) {
+            if(Character.isLetterOrDigit(c) || c == ' ')
+                input += c;
+        }
+        String[] words = input.split(" ");
+
+        if (words.length == 0)
+            return "";
+        for (String word : words) {
+            String lowercaseWord = word.toLowerCase();
+            if (!bannedWords.contains(lowercaseWord)) {
+                int f = frequencyMap.getOrDefault(lowercaseWord, 0);
+                frequencyMap.put(lowercaseWord, ++f);
+                if (max < f) {
+                    max = f;
+                    current = lowercaseWord;
+                }
+            }
+        }
+        return current;
+    }
+
     public String longestPalindrome(String s) {
         boolean[][] memoTable = new boolean[s.length()][s.length()];
         String maxSequence = "";
