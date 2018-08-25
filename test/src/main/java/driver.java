@@ -1,8 +1,32 @@
+import com.sun.tools.javac.util.Assert;
+
 import java.util.*;
 
 public class driver {
+    enum Color {
+        red,
+        green,
+        blue
+    }
+
+    static int countDuplicates(int[] numbers) {
+        Set<Integer> dupes = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < numbers.length; i++) {
+            if (set.contains(numbers[i]))
+                dupes.add(numbers[i]);
+            else set.add(numbers[i]);
+        }
+        return dupes.size();
+
+
+    }
 
     public static void main(String[] args) {
+
+        Color c = Color.green;
+
+        System.out.println(c);
 
         StringProblems sp = new StringProblems();
         Practice2 p = new Practice2();
@@ -21,7 +45,7 @@ public class driver {
         root.right.left.left = new TreeNode(7);
         root.right.right = new TreeNode(6);
 
-        p(sp.findMaxForm(new String[]{"10", "0001", "111001", "1", "0"}, 5, 3));
+        //p(ap.findDisappearedNumbers(new int[]{1,2,4,5,7}));
     }
 
     private static void p(Object s) {

@@ -4,6 +4,63 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StringProblems {
+
+
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (wordList.contains(endWord))
+            return 0;
+        wordList.add(beginWord);
+        Map<String,List<String>> neighbors = getNeighbors(wordList);
+        return getShortestPath(neighbors, beginWord, endWord);
+    }
+
+    private Map<String,List<String>> getNeighbors(List<String> nodes) {
+        Map<String,List<String>> neighborMap = new HashMap<>();
+        for (int i = 0; i < nodes.size(); i++) {
+            for (int j =  i + 1; j < nodes.size(); j++) {
+                if (getDistance(nodes.get(i),nodes.get(j)) == 1) {
+                    List<String> neighbors = neighborMap.getOrDefault(nodes.get(i), new ArrayList<>());
+                    neighbors.add(nodes.get(j));
+                    neighborMap.put(nodes.get(i),neighbors);
+                    neighbors = neighborMap.getOrDefault(nodes.get(j), new ArrayList<>());
+                    neighbors.add(nodes.get(i));
+                    neighborMap.put(nodes.get(j),neighbors);
+                }
+            }
+        }
+        return neighborMap;
+    }
+
+    private int getDistance(String s1, String s2) {
+        int diff = 0;
+        if (s1.length() != s2.length())
+            return Integer.MAX_VALUE;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i))
+                diff++;
+        }
+        return diff;
+    }
+
+    private int getShortestPath(Map<String,List<String>> map, String source, String dest) {
+        PriorityQueue<String> unvisited = new PriorityQueue<>(map.keySet());
+        Map<String,Integer> weight = new HashMap<>();
+        unvisited.forEach(n -> weight.put(n, Integer.MAX_VALUE));
+        weight.put(source, 0);
+        String current = source;
+        unvisited.remove(current);
+        while (current != dest) {
+            final List<String> neighbors = map.get(current);
+            unvisited.remove(current);
+            current = unvisited.poll();
+
+        }
+
+        return 0;
+    }
+
+
     public int findMaxForm(String[] strs, int m, int n) {
         List<String> sorted = sortByLength(strs);
         int zeros = m;
