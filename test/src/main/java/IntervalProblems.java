@@ -1,7 +1,19 @@
 import java.util.*;
 
 public class IntervalProblems {
+/*
+    public int leastInterval(char[] tasks, int n) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < tasks.length; i++) {
+            map.put(tasks[i],map.getOrDefault(tasks[i],0) + 1);
+        }
+        int period = n + 1;
+        int intervals = 0;
+        while (!map.isEmpty()) {
 
+        }
+    }
+*/
     public int minMeetingRooms(Interval[] intervals) {
         Arrays.asList(intervals).sort(new IntervalComparator());
         int meetingRooms = 0;

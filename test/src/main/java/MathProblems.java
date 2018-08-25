@@ -3,6 +3,29 @@ import java.util.*;
 
 public class MathProblems {
 
+    public int countPrimes(int n) {
+        int primes = 0;
+        boolean[] notPrimes = new boolean[n];
+        if (n < 2)
+            return 0;
+        for (int i = 2; i <= n; i++) {
+            if (!notPrimes[i]) {
+                primes++;
+                for (int j = 2; i * j < n; j++)
+                    notPrimes[i * j] = true;
+            }
+        }
+        return primes;
+    }
+
+    private boolean isPrime(int n) {
+        for (int i = 2; i <= n/2; i++) {
+            if (n % i == 0)
+                return false;
+        }
+        return true;
+    }
+
     public int maxProduct(int[] nums) {
         List<Integer> negatives = new ArrayList<>();
         int zeroIndex = -1;

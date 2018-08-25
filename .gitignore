@@ -34,3 +34,5 @@ test/target/generated-sources/
 /.idea/uiDesigner.xml
 /.idea/vcs.xml
 .idea/
+/test/test.iml
+test/target/classes/Google/

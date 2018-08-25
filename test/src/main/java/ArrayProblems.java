@@ -1,7 +1,91 @@
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class ArrayProblems {
+    public int removeElement(int[] nums, int val) {
+        int last = nums.length - 1;
+        int begin = 0;
+        int size = nums.length;
+        while(begin < last) {
+            if (nums[begin] == val) {
+                while (nums[last] == val) {
+                    last--;
+                    size--;
+                }
+                nums[begin] = nums[last];
+                size--;
+                last--;
+            }
+            begin++;
+        }
+        return size;
+    }
+
+    public int[] twoSum(int[] numbers, int target) {
+        int start = 0;
+        int end = numbers.length-1;
+        while(start < end) {
+            int sum = numbers[start] + numbers[end];
+            if (sum == target)
+                return new int[]{start+1,end+1};
+            if (sum > target)
+                end--;
+            if (sum < target)
+                start++;
+        }
+        return new int[]{-1,-1};
+    }
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        System.out.println("image length: " + image.length);
+        System.out.println("image[0] length: " + image[0].length);
+        fillHelper(image,sr,sc,image[sr][sc],newColor);
+        return image;
+    }
+
+    private void fillHelper(int[][] image, int i, int j, int oldC, int newC){
+        if (i < 0 || j < 0 || i >= image.length || j >= image[0].length)
+            return;
+        System.out.println("i: " + i + " j: " + j);
+        if (image[i][j] != oldC)
+            return;
+        image[i][j] = newC;
+        fillHelper(image,i+1,j,oldC,newC);
+        fillHelper(image,i,j-1,oldC,newC);
+        fillHelper(image,i,j+1,oldC,newC);
+        fillHelper(image,i-1,j,oldC,newC);
+    }
+
+    public boolean lemonadeChange(int[] bills) {
+        Map<Integer, Integer> cash = new HashMap<>();
+        for (int i = 0; i < bills.length; i++) {
+            switch (bills[i]) {
+                case 5:
+                    cash.put(5, cash.getOrDefault(5, 0) + 1);
+                    break;
+                case 10:
+                    cash.put(10, cash.getOrDefault(10, 0) + 1);
+                    if (cash.getOrDefault(5, 0) < 1)
+                        return false;
+                    cash.put(5, cash.get(5) - 1);
+                    break;
+                case 20:
+                    cash.put(20, cash.getOrDefault(20, 0) + 1);
+                    int tens = cash.getOrDefault(10, 0);
+                    int fives = cash.getOrDefault(5, 0);
+                    if (tens >= 1 && fives >= 1) {
+                        cash.put(10, tens - 1);
+                        cash.put(5, fives - 1);
+                        break;
+                    }
+                    if (fives >= 3)
+                        cash.put(5, fives - 3);
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
 
     public int arrayNesting(int[] nums) {
         int max = 0;
